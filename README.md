@@ -1,2 +1,2 @@
-# React-TS-ToDo-App
-To Do Web Application Using React &amp; JS
+# todo-react-ts
+To Do Web Application Using React &amp; TS
