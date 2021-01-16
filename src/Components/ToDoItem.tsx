@@ -5,8 +5,10 @@ import styled from 'styled-components';
 const ItemContainer = styled(Responsive)`
 	height: 10rem;
 	width: 95%;
-	background-color: yellow;
 	margin-top: 1rem;
+	border-radius: 20px;
+	border-color: black;
+	border: 2px dotted;
 `;
 
 const Title = styled.div<{ isChecked: boolean }>`

@@ -5,10 +5,12 @@ import Responsive from './Responsive';
 
 const ItemList = styled(Responsive)`
 	height: fit-content;
-	background-color: red;
+	margin-top: 2rem;
+	box-shadow: 2px 2px 2px 2px;
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
+	padding-bottom: 2rem;
 `;
 
 type ToDo = {

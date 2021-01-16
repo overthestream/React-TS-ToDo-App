@@ -12,7 +12,6 @@ const Box = styled(Responsive)`
 	form {
 		width: 100%;
 		height: 100%;
-		background-color: black;
 		margin: 0 auto;
 		justify-content: space-between;
 		display: flex;
@@ -21,7 +20,7 @@ const Box = styled(Responsive)`
 			width: 34rem;
 			margin-left: 1rem;
 			border-radius: 10px;
-			border: none;
+			border-color: black;
 		}
 		.title {
 			height: 2rem;
