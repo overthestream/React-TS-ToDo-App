@@ -1,16 +1,15 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 
-import GlobalStyle from '../Styles/GlobalStyle';
-import Header from './Header';
-import Input from './Input';
-import ToDoList from './ToDoList';
+import GlobalStyle from './Styles/GlobalStyle';
+import Header from './Components/Header';
+import Input from './Components/Input';
+import ToDoList from './Components/ToDoList';
 import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
-
 type ToDo = {
 	isChecked: boolean;
 	isPinned: boolean;
