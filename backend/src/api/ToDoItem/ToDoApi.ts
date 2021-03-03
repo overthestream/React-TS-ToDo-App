@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import { getConnection, getManager } from 'typeorm';
-import ToDoItem from '../entity/ToDoItem';
+import ToDoItem from '../../entity/ToDoItem';
 
 export const addItem = async (req, res): RequestHandler => {
   try {
-    const { title, description } = req;
+    const { title, description } = req.params || '';
 
     await getManager()
       .createQueryBuilder()
@@ -29,7 +29,7 @@ export const addItem = async (req, res): RequestHandler => {
 
 export const deleteItem = async (req, res): RequestHandler => {
   try {
-    const targetId = req.id;
+    const targetId = parseInt(req.params.id, 10);
     await getManager()
       .createQueryBuilder()
       .delete()
@@ -45,7 +45,7 @@ export const deleteItem = async (req, res): RequestHandler => {
 
 export const pinItem = async (req, res): RequestHandler => {
   try {
-    const targetId = req.id;
+    const targetId = parseInt(req.params.id, 10);
 
     const item = await getConnection()
       .createQueryBuilder()
@@ -69,7 +69,7 @@ export const pinItem = async (req, res): RequestHandler => {
 
 export const checkItem = async (req, res): RequestHandler => {
   try {
-    const targetId = req.id;
+    const targetId = parseInt(req.params.id, 10);
 
     const item = await getConnection()
       .createQueryBuilder()
@@ -91,7 +91,7 @@ export const checkItem = async (req, res): RequestHandler => {
   }
 };
 
-export const getList = async (res): RequestHandler => {
+export const getList = async (req, res): RequestHandler => {
   try {
     const items = await getManager()
       .createQueryBuilder()
@@ -100,7 +100,8 @@ export const getList = async (res): RequestHandler => {
       .orderBy('item.isPinned', 'DESC')
       .addOrderBy('item.isChecked', 'ASC')
       .getMany();
-    return items;
+    res.send(items);
+    return res.status(200).end();
   } catch (err) {
     console.log(err);
     return res.status(400).end();
