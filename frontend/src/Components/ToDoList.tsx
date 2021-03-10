@@ -17,7 +17,7 @@ type ToDo = {
 	isChecked: boolean;
 	isPinned: boolean;
 	title: string;
-	content: string;
+	description: string;
 	id: number;
 };
 

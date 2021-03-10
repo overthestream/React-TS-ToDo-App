@@ -1,7 +1,10 @@
 import { createConnection } from 'typeorm';
 import * as express from 'express';
+
+import cors = require('cors');
+import bodyParser = require('body-parser');
+// eslint-disable-next-line import/first
 import * as api from './api/ToDoItem/ToDoApi';
-// import bodyParser = require( 'body-parser');
 
 const initDatabase = async (): Promise<void> => {
   try {
@@ -15,8 +18,9 @@ const initDatabase = async (): Promise<void> => {
 initDatabase();
 const app = express();
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(cors());
 
 app.get('/items', api.getList);
 

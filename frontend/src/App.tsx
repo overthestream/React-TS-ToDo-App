@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 
 import GlobalStyle from './Styles/GlobalStyle';
 import Header from './Components/Header';
@@ -14,20 +15,30 @@ type ToDo = {
 	isChecked: boolean;
 	isPinned: boolean;
 	title: string;
-	content: string;
+	description: string;
 	id: number;
 };
 
 function App() {
-	const [items, setItems] = useState<ToDo[]>([
-		{ isChecked: true, isPinned: true, title: 'ToDo 만들기', content: '일요일까지', id: 1 },
-		{ isChecked: false, isPinned: true, title: '독서', content: '퀀트투자', id: 2 },
-		{ isChecked: false, isPinned: false, title: '골방.dev 회의', content: '일요일 4시', id: 3 },
-	]);
+	const [items, setItems] = useState<ToDo[]>([]);
+
+	useEffect(() => {
+		fetch('http://localhost:3000/items')
+			.then((res) => res.json())
+			.then((toDoItems: ToDo[]) => {
+				setItems(toDoItems);
+			})
+			.catch((err) => console.log(err));
+	}, []);
+
 	const nextId = useRef(4);
 
 	const onCheck = useCallback(
 		(id: number) => {
+			axios
+				.put(`http://localhost:3000/check/${id}`)
+				.then((res) => alert(res))
+				.catch((err) => console.log(err));
 			setItems(
 				items.map((item) => (item.id === id ? { ...item, isChecked: !item.isChecked } : item))
 			);
@@ -38,6 +49,10 @@ function App() {
 	const onRemove = useCallback(
 		(id: number) => {
 			setItems(items.filter((item) => item.id !== id));
+			axios
+				.delete(`http://localhost:3000/delete/${id}`)
+				.then((res) => alert(res))
+				.catch((err) => console.log(err));
 		},
 		[items]
 	);
@@ -46,11 +61,16 @@ function App() {
 		(title: string, content: string) => {
 			let item: ToDo = {
 				title: title,
-				content: content,
+				description: content,
 				id: nextId.current,
 				isChecked: false,
 				isPinned: false,
 			};
+			axios
+				.post(`http://localhost:3000/add/${title}/${content}`)
+				.then((res) => alert(res))
+				.catch((err) => console.log(err));
+
 			setItems(items.concat(item));
 			nextId.current = nextId.current + 1;
 		},
@@ -59,6 +79,10 @@ function App() {
 
 	const onPin = useCallback(
 		(id: number) => {
+			axios
+				.put(`http://localhost:3000/pin/${id}`)
+				.then((res) => alert(res))
+				.catch((err) => console.log(err));
 			setItems(
 				items.map((item) => (item.id === id ? { ...item, isPinned: !item.isPinned } : item))
 			);

@@ -22,7 +22,7 @@ type ToDo = {
 	isChecked: boolean;
 	isPinned: boolean;
 	title: string;
-	content: string;
+	description: string;
 	id: number;
 };
 
@@ -37,14 +37,14 @@ const ToDoItem = ({ item, onCheck, onPin, onRemove }: itemProps) => {
 	return (
 		<ItemContainer>
 			<input
-				type="checkbox"
+				type='checkbox'
 				checked={item.isChecked ? true : false}
 				onClick={() => onCheck(item.id)}
 			/>
 			<Title isChecked={item.isChecked}>{item.title}</Title>
-			<Content isChecked={item.isChecked}>{item.content}</Content>
+			<Content isChecked={item.isChecked}>{item.description}</Content>
 			<input
-				type="checkbox"
+				type='checkbox'
 				checked={item.isPinned ? true : false}
 				onClick={() => onPin(item.id)}
 			/>
