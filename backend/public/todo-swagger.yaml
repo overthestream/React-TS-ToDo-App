@@ -1,0 +1,160 @@
+swagger: '2.0'
+info:
+  description: This is a simple todo API
+  version: 1.0.0
+  title: todo API
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: users
+  description: todo API for users
+
+
+paths:
+  /items:
+    get:
+      tags:
+        - users
+      summary: get to-do list
+      operationId: getList
+      description: |
+        Get List of to-do items from DB.
+      produces:
+      - application/json
+      responses: 
+        200:
+          description: get to-do item list successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ToDoItem'
+        400:
+          description: get failed
+      
+  /add/{title}/{description}:
+    post:
+      tags:
+      - users
+      summary: add to-do item
+      operationId: addItem
+      description: |
+        Add to-do item in DB
+      produces:
+      - application/json
+      parameters:
+      - name: title
+        in: path
+        description: title of to-do item which will be added 
+        required: true
+        type: string
+      - name: description
+        in: path
+        description: description of to-do item which will be added
+        required: true
+        type: string
+      responses: 
+        200:
+          description: add to-do item list successfully
+        400:
+          description: add failed
+
+  /check/{id}:
+    put:
+      tags:
+      - users
+      summary: check to-do item
+      operationId: checkItem
+      description: |
+        check to-do item in DB
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of to-do item which will be checked 
+        required: true
+        type: string
+      responses: 
+        200:
+          description: check to-do item list successfully
+        400:
+          description: check failed
+
+  /pin/{id}:
+    put:
+      tags:
+      - users
+      summary: pin to-do item
+      operationId: pinItem
+      description: |
+        check to-do item in DB
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of to-do item which will be pinned 
+        required: true
+        type: string
+      responses: 
+        200:
+          description: pin to-do item list successfully
+        400:
+          description: pin failed
+  
+  /delete/{id}:
+    delete:
+      tags:
+      - users
+      summary: delete to-do item
+      operationId: deleteItem
+      description: |
+        delete to-do item in DB
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of to-do item which will be deleteed 
+        required: true
+        type: string
+      responses: 
+        200:
+          description: delete to-do item list successfully
+        400:
+          description: delete failed
+
+definitions:
+  ToDoItem:
+    type: object
+    required: 
+    - id
+    - title
+    - description
+    - isPinned
+    - isChecked
+    properties:
+      id:
+        type: string
+        format: uuid
+      title:
+        type: string
+      description:
+        type: string
+      isPinned:
+        type: boolean
+      isChecked: 
+        type: boolean
+        
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /overthestream/Golbang-todoapp/1.0.0
+schemes:
+ - https

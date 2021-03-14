@@ -31,4 +31,6 @@ app.put('/pin/:id', api.pinItem);
 
 app.delete('/delete/:id', api.deleteItem);
 
+app.use(express.static('public'))
+
 export default app;
